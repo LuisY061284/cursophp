@@ -1,4 +1,5 @@
 <?php
+//comentario de prueba para Git
 //con php se puede insertar codigo en cualquier HTML entre sus simbolos<? php y ? >, pero juntos
 //echo nos sirve para ,msotrar informacion en la pantalla
 echo "Hola Mundo! 1 <br>" ;
