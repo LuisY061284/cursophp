@@ -1,0 +1,81 @@
+body{
+    font-family: 'Work Sans', sans-serif;
+}
+.bg-fender{
+    background-color: rgba(255, 0, 0, 1);   
+}
+.btn-caracteristicas{
+    border: 1px solid lightskyblue;
+}
+.btn-round{
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    
+}
+.sunbrust-color{
+    background-image: url(../img/btn_colors/sunbrust_btn.png);
+    background-size: cover;
+}
+.articwhite-color{
+    background-image: url(../img/btn_colors/artic_white_btn.png);
+    background-size: cover;
+}
+.satinSurfGreen-color{
+    background-image: url(../img/btn_colors/satin_surf_green_btn.png);
+    background-size: cover;
+}
+.rosewood-color{
+    background-image: url(../img/btn_colors/rosewood.png);
+    background-size: cover;
+}
+.migas{
+   background-color: rgba(252, 0, 0, 0.2);
+   height: 25px;
+   font-size: 0.7rem;
+   text-align: initial;
+   padding-bottom: 25px;
+}
+.b-none{
+    border: none;
+}
+footer{
+    background-color: #121212;
+    height: 800px;
+}
+.btn-red{
+    color: white;
+    background-color: red;
+}
+.bg-black{
+    background-color: #121212;
+    border: 1px solid white;
+}
+.text-grey{
+    color: grey;
+    font-size: 1.1rem;
+}
+.productos{
+    color: white;
+}
+.btn-fender{
+    color: white;
+    
+}
+.separador{   
+    border: 1px solid #fff;       
+}
+.puntos{
+    background-color: #fff;
+	border-top: 5px dotted #121212;
+}
+.btn-rrss{
+    color: darkslategray;
+}
+.btn-rrss:hover{
+    color:darkslategray
+}
+.btn-pais{
+    border: 2px solid white;
+    border-radius: 25%;
+}

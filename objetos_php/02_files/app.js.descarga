@@ -1,0 +1,295 @@
+$(document).ready(function(){
+
+    //Iniciar  scrollAllow
+    var scrollAllow = true; //para el infinite scroll de eventos
+
+    //Ancla Contacto
+    $('.ancla_contacto').click(function(event) {
+        scrollAllow = false;
+        event.preventDefault();
+        $('.dropdown-menu').fadeOut(100);
+        $('html, body').animate({scrollTop: $('.pie').offset().top - 50}, 300);
+        return false;
+    });
+
+    //Botón Contacto
+    $('.boton_contacto').click(function(event) {
+        $('html, body').animate({scrollTop: 0}, 300);
+        $('.formulario_contacto').fadeIn(200);
+        setTimeout(function(){ scrollAllow = true; }, 1000);
+    });
+    $(".boton_cerrar").click(function() {
+        $('.formularios').fadeOut(200);
+    });
+
+    //Botón Acceso
+    $('.boton_acceso').click(function(event) {
+        $('html, body').animate({scrollTop: 0}, 300);
+        $('.formulario_acceso').fadeIn(200);
+        setTimeout(function(){ scrollAllow = true; }, 1000);
+    });
+    $(".boton_cerrar").click(function() {
+        $('.formularios').fadeOut(200);
+    });
+
+    //Mostrar formulario (si hay errores)
+    var formulario = $('.mostrar_formulario').attr('data-value');
+    if (formulario){
+        $('.formulario_'+formulario).fadeIn(200);
+    }
+
+    //Enviar email AJAX (si no hay errores)
+    if (!formulario){
+        var tipo = $('.enviar_formulario').attr('data-value');
+        if (tipo === 'contacto'){
+            var token = $(".formulario_contacto input[name=_token]").val();
+            var nombre = $(".formulario_contacto input[name=nombre]").val();
+            var telefono = $(".formulario_contacto input[name=telefono]").val();
+            var email = $(".formulario_contacto input[name=email]").val();
+            var asunto = $(".formulario_contacto textarea[name=asunto]").val();
+            var url = window.location.protocol+'//'+window.location.hostname+'/mail';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    _token:token,
+                    tipo:tipo,
+                    nombre:nombre,
+                    telefono:telefono,
+                    email:email,
+                    asunto:asunto
+                }
+            });
+        }
+    }
+
+    $(".clase").hover(
+        function() { $(this).find('img').removeClass('zoom_out').addClass('zoom_in')},
+        function() { $(this).find('img').removeClass('zoom_in').addClass('zoom_out')}
+    );
+
+    //Mostrar alerta cookie
+    if (!Cookies('alerta')){
+        $('.cookies').fadeIn(200);
+    }
+
+    //Set cookie y cerrar alerta
+    $(".cerrar_cookies").click(function(){
+        Cookies.set('alerta', 1, { expires: 365 });
+        $('.cookies').fadeOut(200);
+    });
+
+    //Alerta buscador
+    $(".alerta_buscador").click(function() {
+        $(this).fadeOut(200);
+    });
+
+    function buscar(texto){
+        $('#texto').val(texto);
+        $('#buscar').submit();
+    }
+
+    //Buscador vacío span
+    $(".buscador_vacio span").click(function() {
+        buscar($(this).text());
+    });
+
+    //Buscar etiqueta
+    $(".etiquetas span").click(function() {
+        buscar($(this).text());
+    });
+
+    //Buscar escuela
+    $(".escuelas span").click(function() {
+        buscar($(this).text());
+    });
+
+    //Buscar asignatura
+    $(".asignaturas span").click(function() {
+        buscar($(this).text());
+    });
+
+    //Typeahead buscar
+    if ($(".typetitulo").length) {
+
+        //Opciones por defecto
+       /* $(".typetitulo").click(function() {
+            if ($(this).val()!=='') {
+                $('.buscador_vacio').hide();
+            }
+        });*/
+
+        //locations
+        var json_location = window.location.protocol+'//' + window.location.hostname + '/storage/json/';
+        var clase_location = window.location.protocol+'//' + window.location.hostname + '/clase/';
+        var imagen_location = window.location.protocol+'//' + window.location.hostname + '/storage/images/';
+        var limpiar_location = window.location.protocol+'//' + window.location.hostname + '/limpiar';
+
+        //Typeahead escuelas
+        var escuelas = new Bloodhound({
+            prefetch: {
+                url: json_location  + 'escuela.json',
+                cache: false
+            },
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('titulo'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace
+        });
+
+        //Typeahead asignaturas
+        var asignaturas = new Bloodhound({
+            prefetch: {
+                url: json_location  + 'asignatura.json',
+                cache: false
+            },
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('titulo'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace
+        });
+
+        //Typeahead títulos
+        var titulos = new Bloodhound({
+            prefetch: {
+                url: json_location  + 'clase.json',
+                cache: false
+            },
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('titulo'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace
+        });
+
+        //Typeahead etiquetas
+        var etiquetas = new Bloodhound({
+            prefetch: {
+                url: json_location  + 'etiquetas.json',
+                cache: false
+            },
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace
+        });
+
+        $('.typetitulo').typeahead(
+            {
+                hint: true,
+                highlight: false,
+                minLength: 0
+            },
+            {
+                name: 'escuelas',
+                display: 'titulo',
+                source: escuelas,
+                templates: {
+                    suggestion: function (item) {
+                        return "<span class='escuela " + item.escuela + "'>" + item.titulo + "</span>";
+                    }
+                }
+            },
+            {
+                name: 'asignaturas',
+                display: 'titulo',
+                source: asignaturas,
+                templates: {
+                    suggestion: function (item) {
+                        return "<span class='asignatura'>" + item.titulo + "</span>";
+                    }
+                }
+            },
+            {
+                name: 'etiquetas',
+                source: etiquetas,
+                templates: {
+                    suggestion: function (item) {
+                        return "<span>" + item + "</span>";
+                    }
+                }
+            },
+            {
+                name: 'titulos',
+                display: 'titulo',
+                source: titulos,
+                templates: {
+                    suggestion: function (item) {
+                        var enlace = clase_location + item.slug;
+                        var imagen = imagen_location + item.imagen + '.jpg';
+                        return "<div><a href='"+enlace+"'><img src='"+imagen+"'>" + item.titulo + "</a></div>";
+                    }
+                }
+            }
+        ).on('typeahead:selected', function(e,item){
+            if (item.slug){
+                //Limpio con ajax y redirecciono
+                $.ajax({ url: limpiar_location });
+                window.location.href = clase_location + item.slug;
+            }
+            else{
+                //Form
+                e.target.form.submit();
+            }
+        });
+
+        $( ".typetitulo" ).on( "focus", function() {
+            $('.buscador_vacio').css({opacity: 1});
+        }).on( "focusout", function() {
+            $('.buscador_vacio').css({opacity: 0});
+        });
+
+        /*
+         .on( "keyup", function() {
+         if ($(this).val()!=='') {
+         $('.buscador_vacio').hide();
+         }
+         else{
+         $('.buscador_vacio').show();
+         }
+         })
+         */
+
+        //Para que aparezca y no se vea nada raro
+        $('.texto_buscador').animate({opacity: 1}, 500);
+        $('#buscar').animate({opacity: 1}, 500);
+
+    }
+
+    //Infinite scroll
+    if ($(".infinite").length) {
+
+        var ancho = window.innerWidth;
+        var offset = (ancho > 767) ? 1000 : 700;
+        var page = 2;
+        var total = Math.ceil($('.total_clases').val()/10);
+        $(window).scroll(function () {
+            var scrollTop = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scrollTop + windowHeight + offset > documentHeight) {
+                if ((page<=total) && (scrollAllow)){
+                    scrollAllow = false;
+                    //$('.cargando').fadeIn(500);
+                    var url = window.location.protocol+'//' + window.location.hostname + '/paginar?page=' + page;
+
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(data){
+                            if (data === "") {
+                                //$('.cargando').fadeIn(500);
+                            }
+                            $(".infinite").append(data);
+                            //$('.cargando').fadeOut(500);
+                            scrollAllow = true;
+                        }
+                    });
+                    page++;
+                }
+                else{
+                    //$('.cargando').fadeOut(500);
+                }
+
+            }
+        });
+    }
+
+    /*
+     $('.guia').css('top', scrollTop);
+     $('.guia span').html('scrolltop '+scrollTop+'<br>windowheight '+windowHeight+'<br>documentheight '+documentHeight+'<br>scrollcargando '+scrollCargando+'<br>page '+page);
+     console.log('cargar ' + url);
+     */
+
+});

@@ -1,0 +1,903 @@
+/* COOKIES */
+
+.cookies{
+    padding: 1em;
+    position: fixed;
+    bottom: 2em;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 1.1em;
+    display: none;
+    z-index: 10000;
+}
+
+.cookies a,
+.cookies a:hover{
+    color: #fff;
+    text-decoration: underline;
+}
+
+.cerrar_cookies span{
+    background-color: #fff;
+    color: #333;
+    padding: 0.5em 1em;
+    font-weight: 300;
+}
+
+.cerrar_cookies span:hover{
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 992px){
+
+    .cookies{
+        font-size: 1em;
+    }
+
+}
+
+@media screen and (max-width: 768px){
+
+    .cookies{
+        font-size: 0.9em;
+    }
+
+}
+
+/* FOOTER */
+
+footer{
+    font-size: 1.2em;
+    text-align: center;
+    margin: 4em 0 0 0;
+    padding: 0;
+    border: none;
+    background-color: rgb(210, 210, 210);
+}
+
+footer a,
+footer a:focus{
+    color: #666;
+}
+
+footer a:hover{
+    color: #000;
+}
+
+.titulo_footer{
+    font-size: 1.1em;
+    padding: 2em 0 1em 0;
+}
+
+.pie{
+    color: #666;
+}
+
+.contacto{
+    margin-top: 1.5em;
+}
+
+.contacto svg{
+    width: 6em;
+    height: 6em;
+}
+
+.contacto svg circle{
+    stroke: #666;
+}
+
+.contacto svg path{
+    stroke: #666;
+    fill: #666;
+}
+
+.contacto svg:hover circle{
+    stroke: #000;
+}
+
+.contacto svg:hover path{
+    stroke: #000;
+    fill: #000;
+}
+
+@media screen and (max-width: 992px){
+
+    footer{
+        font-size: 1.1em;
+    }
+
+    .contacto svg{
+        width: 4em;
+        height: 4em;
+    }
+
+}
+
+@media screen and (max-width: 768px){
+
+    footer{
+        font-size: 1em;
+    }
+
+    .contacto svg{
+        width: 3.5em;
+        height: 3.5em;
+    }
+
+}
+
+@media screen and (max-width: 580px){
+
+    footer{
+        font-size: 0.9em;
+    }
+
+}
+
+/* BUSCADOR Y TYPEAHEAD*/
+.texto_buscador{
+    padding: 1em 0 0 0;
+    font-size: 2em;
+    font-weight: 100;
+    text-align: center;
+    opacity: 0;
+}
+
+.buscador{
+    padding: 1em 0 3em 0;
+    text-align: center;
+}
+
+#buscar{
+    opacity: 0;
+}
+
+.twitter-typeahead{
+    width: 65%;
+}
+
+.twitter-typeahead input[type=text]{
+    color: #333;
+    border: 1px solid #aaa;
+    font-size: 2em;
+    font-weight: 200;
+    padding: 0.2em;
+    width: 100%;
+}
+
+.input_buscador:focus{
+    border: 1px solid #ccc;
+}
+
+.buscar{
+    position: relative;
+    top: 1.7em;
+    left: 0.2em;
+}
+
+.limpiar{
+    position: relative;
+    top: 1.7em;
+    left: 0.4em;
+}
+
+.buscador svg{
+    height: 2em;
+    width: 2em;
+}
+
+.buscador svg path{
+    stroke-width: 0.1;
+    fill: #777;
+}
+
+.buscador svg:hover path{
+    fill: #333;
+}
+
+.alerta_buscador{
+    position: absolute;
+    padding: 0.2em 0;
+    font-size: 1.3em;
+    color: #f00;
+    width: 100%;
+    margin: 0 auto;
+    cursor: pointer;background-color: #fff;
+}
+
+.buscador_vacio{
+    position: absolute;
+    padding: 0.2em 0 0 0;
+    width: 65%;
+    margin: 0 16.3%;
+    text-align: left;
+    opacity: 0;
+}
+
+.buscador_vacio span{
+    padding: 0.2em 0.5em;
+    font-size: 1em;
+    line-height: 2.5em;
+    margin: 0 0.2em;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 1200px){
+
+    .twitter-typeahead{
+        width: 80%;
+    }
+    .buscador_vacio{
+        width: 80%;
+        margin: 0 8.5%;
+    }
+
+}
+
+@media screen and (max-width: 767px){
+    .texto_buscador{
+        padding: 4em 0 0 0;
+        font-size: 1.5em;
+    }
+    .buscador{
+        padding: 1em 0 2em 0;
+    }
+
+    .twitter-typeahead{
+        width: 70%;
+    }
+
+    .alerta_buscador{
+        font-size: 1.1em;
+    }
+
+    .twitter-typeahead input[type=text],
+    .input_buscador{
+        font-size: 1.5em;
+    }
+
+    .buscar, .limpiar{
+        top: 1.5em;
+    }
+
+}
+
+
+/* TYPEAHEAD HINTS*/
+.tt-hint {
+    color: #999;
+}
+
+.tt-hint a{
+    color: #999;
+}
+
+.tt-menu {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.tt-suggestion{
+    padding: 0.5em 0.2em;
+    height: auto;
+    border-bottom: 1px solid #eee;
+}
+
+.tt-suggestion a{
+    color: #333;
+}
+
+.tt-suggestion:hover {
+    cursor: pointer;
+    background-color: rgba(219, 150, 0, 0.1);
+}
+
+.tt-menu .tt-dataset-titulos img{
+    width: 2.5em;
+    margin-right: 1em;
+}
+
+.tt-suggestion.tt-cursor {
+    color: #777;
+    background-color: rgba(0, 122, 78, 0.3);
+}
+
+.tt-dataset-escuelas,
+.tt-dataset-asignaturas,
+.tt-dataset-etiquetas{
+    border-bottom: 1px solid #eee;
+}
+
+.tt-menu .tt-dataset-escuelas span,
+.tt-menu .tt-dataset-asignaturas span{
+    padding: 0.2em 0.5em;
+    color: #fff;
+    font-size: 1em;
+    line-height: 2.5em;
+    margin: 0 0.2em;
+    cursor: pointer;
+
+}
+
+.tt-menu .tt-dataset-escuelas .ceu:hover{
+    background-color: rgba(0, 105, 173, 0.8);
+}
+
+.tt-menu .tt-dataset-escuelas .cetys:hover{
+    background-color: rgba(219, 120, 17, 0.9);
+}
+
+.tt-menu .tt-dataset-escuelas .publico:hover{
+    background-color: rgba(43, 133, 39, 0.8);
+}
+.tt-menu .tt-dataset-escuelas .privado:hover{
+    background-color: rgba(186, 0, 8, 0.8);
+}
+
+.tt-menu .tt-dataset-asignaturas span{
+    background-color: #555;
+}
+
+.tt-menu .tt-dataset-asignaturas span:hover{
+    background-color: #555;
+}
+
+.etiqueta,
+.tt-menu .tt-dataset-etiquetas span{
+    padding: 0.2em 0.5em;
+    color: #333;
+    background-color: #eee;
+    font-size: 1em;
+    line-height: 2.5em;
+    margin: 0 0.2em;
+    cursor: pointer;
+}
+
+.etiqueta:hover,
+.tt-menu .tt-dataset-etiquetas span:hover{
+    background-color: #eee;
+}
+
+/* HOME */
+
+.contenido{
+    padding: 0;
+    margin: 0;
+}
+
+.clases{
+    padding: 1em 0.5em;
+}
+.clase{
+    padding: 1em 0.5em;
+}
+
+.clase .thumbnail {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    border: none;
+    float: left;
+    padding: 0 0.5em 0 0;
+    margin: 0;
+}
+
+.clase .thumbnail img{
+    position: absolute;
+    width: 100%;
+    border-radius: 0.2em;
+}
+
+
+.clase .nuevo{
+    position: absolute;
+    background-color: rgba(255, 0, 0, 0.8);
+    text-align: center;
+    color: #fff;
+    top: 0.8em;
+    left: -1.8em;
+    padding: 0.3em 2em 0.3em 2em;
+    font-size: 1.2em;
+    font-weight: 300;
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+    transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 1200px){
+    .clase .nuevo {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 992px){
+    .clase .nuevo {
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0.5em 0 0.3em 0;
+        -ms-transform: rotate(0deg); /* IE 9 */
+        -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+        transform: rotate(0deg);
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 560px){
+    .clase .nuevo {
+        font-size: 0.8em;
+    }
+}
+
+
+.clase .texto{
+    padding: 0 0.5em 0 1em;
+}
+
+.clase a h1{
+    font-weight: 400;
+    font-size: 1.8em;
+    color: #333;
+    margin: 0 0 0.2em 0;
+    padding: 0;
+}
+
+.clase a .fecha{
+    background-color: #eee;
+    padding: 0.1em 0.2em;
+    color: #333;
+}
+
+.clase .escuelas span,
+.clase .asignaturas span{
+    padding: 0.1em 0.3em;
+    margin-right: 0.2em;
+    color: #fff;
+}
+
+.clase a h2{
+    font-weight: 300;
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0.3em 0 0 0;
+    color: #999;
+}
+
+.clase a h2 span{
+    color: #333;
+    line-height: 2em;
+}
+
+.zoom_in{
+    transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -webkit-transition: all 3s ease;
+    -moz-transition: all 3s ease;
+    -o-transition: all 3s ease;
+    transition: all 3s ease;
+}
+
+.zoom_out{
+    transform: scale(1);
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    -webkit-transition: all 3s ease;
+    -moz-transition: all 3s ease;
+    -o-transition: all 3s ease;
+    transition: all 3s ease;
+}
+
+@media screen and (max-width: 767px){
+
+    .clase{
+        padding: 1em 0.5em;
+    }
+
+    .clase a h1{
+        font-size: 1.5em;
+    }
+
+    .clase .thumbnail {
+        height: 200px;
+    }
+
+}
+
+@media screen and (max-width: 560px){
+
+    .clase .thumbnail {
+        height: 120px;
+    }
+
+}
+
+/* SECCION Y CLASES */
+
+.seccion{
+    font-size: 1.5em;
+    padding: 1em 0;
+    margin-top: 2em;
+
+}
+
+.clases h5,
+.seccion h5{
+    margin: 0 0 0.5em 0;
+    color: #999;
+}
+
+.clases h5 b a,
+.seccion h5 b a{
+    color: #333;
+}
+
+.clases h5 a,
+.seccion h5 a{
+    color: #999;
+}
+
+.clases h5 a:hover,
+.seccion h5 a:hover{
+    color: #999;
+}
+
+.clases h1,
+.seccion h1{
+    font-weight: 300;
+    font-size: 2.5em;
+    margin: 0;
+    padding: 0;
+}
+
+.clases hr,
+.seccion hr{
+    margin: 0.5em 0;
+}
+
+.ficha{
+    margin: 2em 0 0 0;
+    padding: 0;
+    border-top: 1px solid #eee;
+}
+
+.ficha .tit_ficha{
+    font-size: 0.9em;
+    color: #999;
+}
+
+.ficha .etiquetas
+.ficha .escuelas,
+.ficha .asignaturas,
+.ficha .fecha{
+    font-size: 0.8em;
+}
+
+.ficha .etiquetas span{
+    padding: 0 0.2em;
+    margin-right: 0.1em;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.ficha .escuelas span,
+.ficha .asignaturas span{
+    padding: 0 0.2em;
+    margin-right: 0.3em;
+    cursor: pointer;
+}
+
+.ficha .escuelas span,
+.ficha .etiquetas span{
+    font-size: 0.9em;
+}
+
+.compartir{
+    padding: 0;
+    text-align: right;
+}
+
+.compartir svg{
+    width: 1.4em;
+    height: 1.4em;
+    vertical-align: middle;
+}
+
+.facebook svg circle{
+    stroke: #4267b2;
+}
+
+.facebook svg path{
+    stroke: #4267b2;
+    fill: #4267b2;
+}
+
+.twitter svg circle{
+    stroke: #1da1f2;
+}
+
+.twitter svg path{
+    stroke: #1da1f2;
+    fill: #1da1f2;
+}
+
+.whatsapp svg circle{
+    stroke: #65bc54;
+}
+
+.whatsapp svg path{
+    stroke: #65bc54;
+    fill: #65bc54;
+}
+
+.pdf svg{
+    width: 1.3em;
+    height: 1.3em;
+}
+
+.seccion .entradas{
+    padding: 0;
+}
+
+.seccion .entradas a{
+    background-color: rgb(30, 30, 30);
+    font-size: 0.9em;
+    color: #fff;
+    padding: 0.1em 0.3em;
+    margin-right: 0.3em;
+}
+
+.seccion .entradas .activo{
+    background-color: rgb(219, 150, 0);
+}
+
+.seccion .entradilla{
+    font-weight: 300;
+}
+
+.seccion ol li a{
+    color: #333;
+}
+
+.seccion ol li a:hover{
+    text-decoration: underline;
+}
+
+.seccion .archivos{
+    padding: 2em 0 0 0;
+}
+
+.seccion .archivos svg{
+    cursor: pointer;
+    width: 3em;
+    height: 3em;
+    vertical-align: middle;
+}
+
+.seccion .archivos a{
+    color: #666;
+}
+
+.seccion .archivos a:hover{
+    color: #333;
+}
+
+@media screen and (max-width: 1200px){
+
+    .seccion{
+        padding: 1.5em 0.5em;
+        font-size: 1.3em;
+
+    }
+
+    .seccion h1{
+        font-size: 2em;
+    }
+
+}
+
+@media screen and (max-width: 767px){
+    .compartir svg{
+        width: 1.8em;
+        height: 1.8em;
+    }
+
+    .pdf svg{
+        width: 1.7em;
+        height: 1.7em;
+    }
+
+    .seccion{
+        padding: 1em 0.5em;
+        margin-top: 5em;
+    }
+
+    .seccion .archivos svg{
+        width: 2em;
+        height: 2em;
+    }
+
+}
+
+.infinite{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.status_scroll{
+    padding: 1em;
+    background-color: #eee;
+}
+
+.formularios{
+    position: absolute;
+    width: 50%;
+    top: 13%;
+    left: 25%;
+    z-index: 10000;
+    background-color: rgba(255, 255, 255, 0.97);
+    padding: 0.4em;
+    display: none;
+}
+
+.formularios .borde{
+    border: 1px solid #aaa;
+    padding: 1em;
+}
+
+.formularios h1{
+    font-weight: 300;
+}
+
+.formularios hr{
+    margin: 0 0 2em 0;
+    border-top: 1px solid #aaa;
+}
+
+.input_estandar{
+    color: #333;
+    border: 1px solid #aaa;
+    font-size: 1.3em;
+    padding: 0.2em;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.input_estandar:focus{
+    border: 1px solid rgb(30, 30, 30);
+}
+
+.noresize{
+    resize: none;
+}
+
+.submit_estandar{
+    color: #333;
+    border: 0;
+    background-color: #eee;
+    font-size: 1.3em;
+    padding: 0.2em 0.2em 0.2em 0;
+    width: 100%;
+}
+
+.submit_estandar:hover{
+    background-color: #ccc;
+}
+
+.boton_cerrar{
+    font-size: 1.3em;
+    color: #777;
+    padding: 0 0 1em 0;
+}
+
+.boton_cerrar:hover{
+    color: #333;
+    cursor: pointer;
+}
+
+.boton_acceso li{
+    color: rgb(219, 150, 0);
+}
+
+.cerrar_sesion{
+    margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 1.5em;
+    font-weight: 200;
+    text-align: center;
+}
+
+.cerrar_sesion a:hover{
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1200px){
+
+    .formularios{
+        width: 60%;
+        left: 20%;
+    }
+
+}
+
+@media screen and (max-width: 992px){
+
+    .formularios{
+        width: 70%;
+        left: 15%;
+    }
+
+}
+
+@media screen and (max-width: 767px){
+    .formularios{
+        width: 90%;
+        left: 5%;
+        font-size: 1em;
+    }
+
+    .formularios h1{
+        font-size: 1.4em;
+    }
+
+    .boton_cerrar{
+        font-size: 1em;
+    }
+
+    .input_estandar{
+        font-size: 1em;
+    }
+
+}
+
+.indice{
+    padding: 1em 0 0 0;
+}
+/*
+.cargando{
+    position: fixed;
+    top: 50%;
+    font-size: 1.3em;
+    padding: 1em;
+    text-align: center;
+    z-index: 1000000;
+    display: none;
+}
+
+.cargando img{
+    width: 6em;
+}
+
+@media screen and (max-width: 767px){
+    .cargando{
+        top: 70%;
+    }
+    .cargando img{
+        width: 3em;
+    }
+}
+
+.guia{
+    top: 0;
+    left: 1em;
+    position: absolute;
+    color: red;
+    z-index: 1000000;
+    width: 100%;
+}
+
+.guia hr{
+    border-color: red;
+    margin: 0;
+    padding: 0;
+}
+
+.guia span{
+    padding-top: 3em;
+}
+*/
+
+

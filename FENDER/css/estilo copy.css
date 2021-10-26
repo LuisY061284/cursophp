@@ -1,0 +1,27 @@
+body{
+    font-family: 'Work Sans', sans-serif;
+}
+.bg-fender{
+    background-color: rgba(255, 0, 0, 1);
+}
+#fender_shop{
+    background-color: rgba(180, 132, 9, 0.5);
+}
+
+#american_profesional{
+    /* background-color: rgba(180, 132, 9, 0.7);*/
+    background-image: url(../img/img_para_portada/77925-32.png);
+    color: darkslategray;
+      
+}
+#american_performance{
+    background-color: rgba(180, 132, 9, 0.9);
+    
+}
+#amplificacion{
+    background-image: url(../img/img_para_portada/amplis.jpg);
+    background-size: cover;
+}
+#fender_services{
+
+}

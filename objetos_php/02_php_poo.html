@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-99367448-1');
+        </script>
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="title" content="Programación orientada a objetos en PHP - Herencia, Extensión y Polimorfismo">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <meta name="url" content="">
+        <title>PHP POO 2</title>
+
+        <!--Favicon-->
+        <link rel="shortcut icon" type="image/x-icon" href="./02_files/logo.png">
+
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="./02_files/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="./02_files/prism.css" rel="stylesheet">
+        <link href="./02_files/comun.css" rel="stylesheet">
+        <link href="./02_files/app.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+                <!--Título-->
+        <div class="col-xs-12 sinpadding margin_top2"> 
+            <h1>Herencia, Extensión y Polimorfismo</h1>
+            <hr>
+        </div>
+
+        <!--Entradilla y Texto-->
+        <div class="col-xs-12 sinpadding">
+                        <t>Introducción</t><br>
+<br>
+Cuando empezamos a profundizar en el uso de clases es cuando apreciamos la potencia de la programación orientada a objetos.<br>
+<br>
+En este apartado vamos a ver cómo podemos mejorar nuestras clases para que sean mucho más versátiles y nos sirvan para más cosas, y para ello partiremos de los conceptos de <b>herencia, extensión y polimorfismo</b>.<br>
+<br>
+<br>
+<t>Herencia y Extensión</t><br>
+<br>
+Según el <a href="https://www.php.net/manual/es/language.oop5.inheritance.php" target="_blank">sitio oficial de PHP</a>:<br>
+<br>
+<i>"La herencia es un principio de programación bien establecido y PHP hace uso de él en su modelado de objetos. Este principio afectará la manera en que muchas clases y objetos se relacionan unas con otras.<br>
+<br>
+Por ejemplo, cuando se extiende una clase, la subclase hereda todos los métodos públicos y protegidos de la clase padre. A menos que una clase sobrescriba esos métodos, mantendrán su funcionalidad original.<br>
+<br>
+Esto es útil para la definición y abstracción de la funcionalidad y permite la implementación de funcionalidad adicional en objetos similares sin la necesidad de reimplementar toda la funcionalidad compartida."</i><br>
+<br>
+Dicho de otro modo, mediante el uso de la <b>herencia</b> vamos a poder cambiar la <b>morfología</b> de la clase, <b>extendiéndola</b> para adaptarla a uestras necesidades concretas.<br>
+<br>
+Para verlo en forma de ejemplo, vamos a suponer en la siguiente ampliación para nuestro desarrollo de coches:<br>
+<br>
+<ul class="ul_number"><br>
+<li>Estaba pensado para la gestión de vehículos de un parking de 2 plantas subterráneas más una de superficie.</li><br>
+<li>Ahora se va a ampliar su uso a furgonetas y autobuses.</li><br>
+<li>Los autobuses no pueden aparcar en las plantas subterráneas pero sí en la superficie y además debo conocer el nombre de la empresa propietaria.</li><br>
+<li>Las furgonetas solo pueden aparcar en la primera planta subterránea o en superficie y además debo conocer la altura.</li><br>
+<li>Los coches solo pueden aparcar en las plantas subterráneas pero no en la superficie.</li><br>
+</ul><br>
+<br>
+Una posible solución podría pasar por realizar las siguientes acciones:<br>
+<br>
+<ul class="ul_number"><br>
+<li>Modificar la clase <b>Coche</b> (y su archivo correspondiente) para que ahora se llame <b>Vehículo</b>.</li><br>
+<li>Añadir el atributo <b>planta</b> y sus correspondientes <b>get()</b> y <b>set()</b> para hacer referencia a la planta en la que estaciona el vehículo (aunque no aparezca en el constructor al no saber en qué planta estará el coche).</li><br>
+<li>Añadir los atributos <b>planta</b> y <b>plantas</b> con un <i>array</i> que incluya las diferentes plantas disponibles.</li><br>
+<li>Crear las clases <b>Autobus</b>, <b>Furgoneta</b> y <b>Coche</b> que extiendan la clase Vehiculo e incorporen el método <b>puedeAparcar()</b> para comprobar si puede o no puede aparcar, en función de la planta de entrada (este método se llamará igual pero será diferente en cada clase).</li><br>
+<li>Añadir a la clase Autobus el atributo <b>empresa</b> y sobre-escribir el constructor para que incluya dicho atributo.</li><br>
+</ul><br>
+<br>
+La clase <b>Vehiculo.php</b>:<br>
+<br>
+<pre class=" language-php"><code class=" language-php">
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Vehiculo</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//Variables o atributos</span>
+    <span class="token keyword">var</span> <span class="token variable">$marca</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> <span class="token variable">$modelo</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> <span class="token variable">$color</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> <span class="token variable">$propietario</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> <span class="token variable">$planta</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> <span class="token variable">$plantas</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string">"superficie"</span><span class="token punctuation">,</span><span class="token string">"subterraneo1"</span><span class="token punctuation">,</span><span class="token string">"subterraneo2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$miMarca</span><span class="token punctuation">,</span><span class="token variable">$miModelo</span><span class="token punctuation">,</span><span class="token variable">$miColor</span><span class="token punctuation">,</span><span class="token variable">$miPropietario</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">marca</span> <span class="token operator">=</span> <span class="token variable">$miMarca</span><span class="token punctuation">;</span>
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">modelo</span> <span class="token operator">=</span> <span class="token variable">$miModelo</span><span class="token punctuation">;</span>
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">color</span> <span class="token operator">=</span> <span class="token variable">$miColor</span><span class="token punctuation">;</span>
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">propietario</span> <span class="token operator">=</span> <span class="token variable">$miPropietario</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//Funciones o métodos</span>
+    <span class="token keyword">function</span> <span class="token function">setMarca</span><span class="token punctuation">(</span><span class="token variable">$miMarca</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">marca</span> <span class="token operator">=</span> <span class="token variable">$miMarca</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">getMarca</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">return</span> <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">marca</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">setModelo</span><span class="token punctuation">(</span><span class="token variable">$miModelo</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">modelo</span> <span class="token operator">=</span> <span class="token variable">$miModelo</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">getModelo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">return</span> <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">modelo</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token variable">$miColor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">color</span> <span class="token operator">=</span> <span class="token variable">$miColor</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">getColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">return</span> <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">color</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">setPropietario</span><span class="token punctuation">(</span><span class="token variable">$miPropietario</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">propietario</span> <span class="token operator">=</span> <span class="token variable">$miPropietario</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">getPropietario</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">return</span> <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">propietario</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">setPlanta</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">planta</span> <span class="token operator">=</span> <span class="token variable">$miPlanta</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">getPlanta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">return</span> <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">planta</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></code></pre><br>
+<br>
+<br>
+La clase <b>Autobus.php</b>:<br>
+<br>
+<pre class=" language-php"><code class=" language-php">
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment" spellcheck="true">//Requiero el archivo de clase para extenderlo en este script</span>
+<span class="token keyword">require_once</span><span class="token punctuation">(</span><span class="token string">"Vehiculo.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Autobus</span> <span class="token keyword">extends</span> <span class="token class-name">Vehiculo</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">var</span> <span class="token variable">$empresa</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$miMarca</span><span class="token punctuation">,</span><span class="token variable">$miModelo</span><span class="token punctuation">,</span><span class="token variable">$miColor</span><span class="token punctuation">,</span><span class="token variable">$miPropietario</span><span class="token punctuation">,</span><span class="token variable">$miEmpresa</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">marca</span> <span class="token operator">=</span> <span class="token variable">$miMarca</span><span class="token punctuation">;</span>
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">modelo</span> <span class="token operator">=</span> <span class="token variable">$miModelo</span><span class="token punctuation">;</span>
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">color</span> <span class="token operator">=</span> <span class="token variable">$miColor</span><span class="token punctuation">;</span>
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">propietario</span> <span class="token operator">=</span> <span class="token variable">$miPropietario</span><span class="token punctuation">;</span>
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">empresa</span> <span class="token operator">=</span> <span class="token variable">$miEmpresa</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//Funciones o métodos</span>
+    <span class="token keyword">function</span> <span class="token function">setEmpresa</span><span class="token punctuation">(</span><span class="token variable">$miEmpresa</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">empresa</span> <span class="token operator">=</span> <span class="token variable">$miEmpresa</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">getEmpresa</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">return</span> <span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">empresa</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">function</span> <span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//True si está en el array y es superficie</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token function">array_search</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">,</span><span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">plantas</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token boolean">false</span> <span class="token operator">&amp;&amp;</span> <span class="token function">array_search</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">,</span><span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">plantas</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+
+<span class="token punctuation">}</span>
+</span></code></pre><br>
+<br>
+<br>
+La clase <b>Furgoneta.php</b>:<br>
+<br>
+<pre class=" language-php"><code class=" language-php">
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment" spellcheck="true">//Requiero el archivo de clase para extenderlo en este script</span>
+<span class="token keyword">require_once</span><span class="token punctuation">(</span><span class="token string">"Vehiculo.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Furgoneta</span> <span class="token keyword">extends</span> <span class="token class-name">Vehiculo</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">function</span> <span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//True si está en el array y no es subterraneo2</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token function">array_search</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">,</span><span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">plantas</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token boolean">false</span> <span class="token operator">&amp;&amp;</span> <span class="token function">array_search</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">,</span><span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">plantas</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+
+<span class="token punctuation">}</span>
+</span></code></pre><br>
+<br>
+<br>
+La clase <b>Coche.php</b>:<br>
+<br>
+<pre class=" language-php"><code class=" language-php">
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment" spellcheck="true">//Requiero el archivo de clase para extenderlo en este script</span>
+<span class="token keyword">require_once</span><span class="token punctuation">(</span><span class="token string">"Vehiculo.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Coche</span> <span class="token keyword">extends</span> <span class="token class-name">Vehiculo</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">function</span> <span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">//True si está en el array y no es superficie</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token function">array_search</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">,</span><span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">plantas</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token boolean">false</span> <span class="token operator">&amp;&amp;</span> <span class="token function">array_search</span><span class="token punctuation">(</span><span class="token variable">$miPlanta</span><span class="token punctuation">,</span><span class="token this">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">plantas</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+
+<span class="token punctuation">}</span>
+</span></code></pre><br>
+<br>
+<br>
+El archivo <b>index.php</b>:<br>
+<br>
+<pre class=" language-php"><code class=" language-php">
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+    <span class="token comment" spellcheck="true">//Requiero los archivos de clase para incluirlos en este script</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token string">"Autobus.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token string">"Furgoneta.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token string">"Coche.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>Ejemplo 4: Herencia, Extensión y Polimorfismo<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+    <span class="token comment" spellcheck="true">//Instancio y configuro los vehículos</span>
+    <span class="token variable">$autobus</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Autobus</span><span class="token punctuation">(</span><span class="token string">"Volvo"</span><span class="token punctuation">,</span><span class="token string">"9800 2017"</span><span class="token punctuation">,</span><span class="token string">"gris"</span><span class="token punctuation">,</span><span class="token string">"Mario"</span><span class="token punctuation">,</span><span class="token string">"Desfufor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$furgoneta</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Furgoneta</span><span class="token punctuation">(</span><span class="token string">"Wolkswagen"</span><span class="token punctuation">,</span><span class="token string">"Caravelle"</span><span class="token punctuation">,</span><span class="token string">"blanco"</span><span class="token punctuation">,</span><span class="token string">"Rebeca"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$coche</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Coche</span><span class="token punctuation">(</span><span class="token string">"Toyota"</span><span class="token punctuation">,</span><span class="token string">"Corolla"</span><span class="token punctuation">,</span><span class="token string">"verde"</span><span class="token punctuation">,</span><span class="token string">"Marcos"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    ¿Puedo aparcar el coche en la superficie?:
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token punctuation">(</span><span class="token variable">$coche</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token string">"superficie"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token string">"si"</span> <span class="token punctuation">:</span> <span class="token string">"no"</span> <span class="token delimiter important">?&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    ¿Puedo aparcar el coche en el subterráneo 2?:
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token punctuation">(</span><span class="token variable">$coche</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token string">"subterraneo2"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token string">"si"</span> <span class="token punctuation">:</span> <span class="token string">"no"</span> <span class="token delimiter important">?&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    ¿Puedo aparcar la furgoneta en la superficie?:
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token punctuation">(</span><span class="token variable">$furgoneta</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token string">"superficie"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token string">"si"</span> <span class="token punctuation">:</span> <span class="token string">"no"</span> <span class="token delimiter important">?&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    ¿Puedo aparcar la furgoneta el subterráneo 2?:
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token punctuation">(</span><span class="token variable">$furgoneta</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token string">"subterraneo2"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token string">"si"</span> <span class="token punctuation">:</span> <span class="token string">"no"</span> <span class="token delimiter important">?&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    ¿Puedo aparcar el autobús en la superficie?:
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token punctuation">(</span><span class="token variable">$autobus</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token string">"superficie"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token string">"si"</span> <span class="token punctuation">:</span> <span class="token string">"no"</span> <span class="token delimiter important">?&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    ¿Puedo aparcar el autobús el subterráneo 1?:
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token punctuation">(</span><span class="token variable">$autobus</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">puedeAparcar</span><span class="token punctuation">(</span><span class="token string">"subterraneo1"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token string">"si"</span> <span class="token punctuation">:</span> <span class="token string">"no"</span> <span class="token delimiter important">?&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    ¿A qué empresa pertenece el autobús?:
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token variable">$autobus</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">getEmpresa</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token delimiter important">?&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code></pre><br>
+<br>
+<br>
+Y como siempre, vamos a analizar qué conclusiones podríamos extraer del ejemplo anterior:<br>
+<br>
+<ul class="ul_circle"><br>
+<li>Para extender una clase y poder acceder a todos sus métodos y atributos, tan solo tenemos que utilizar la directiva <b>extends</b> después del nombre de clase y añadir el nombre de la clase principal.</li><br>
+<li>Los nombres de clases, variables o funciones nunca llevan tildes, caracteres extraños ni espacios, y no pueden empezar por un número.</li><br>
+<li>No todos los atributos deben estar en el constructor, solo los necesarios para inicializar correctamente el objeto de clase.</li><br>
+<li>Es posible sobre-escribir un atributo o método (incluyendo el constructor) en la clase secundaria simplemente declarándolo de nuevo en ella.</li><br>
+<li>Al usar varias clases que extienden de la misma, es mejor utilizar <b>require_once()</b> para evitarnos la carga de la clase principal de nuevo.</li><br>
+<li>A la hora de mezclar PHP con HTML, es mejor y más seguro frente a posibles inyecciones de código de tipo XSS incrustar el PHP dentro del HTML, esto es, abrir y cerrar las etiquetas de PHP en vez de hacer <b>echos</b> par el HTML.</li><br>
+<li>Para PHP en una comparación, 0 y <i>false</i> es el mismo valor, lo que puede dar lugar a confusión.</li><br>
+</ul><br>
+<br>
+        <!-- JS -->
+        <script src="./02_files/jquery-3.2.1.min.js.descarga" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="./02_files/jquery-ui.min.js.descarga" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+        <script src="./02_files/bootstrap.min.js.descarga" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="./02_files/typeahead.bundle.min.js.descarga"></script>
+        <script src="./02_files/cookie.js.descarga"></script>
+        <script src="./02_files/prism.js.descarga"></script>
+        <script src="./02_files/comun.js.descarga"></script>
+        <script src="./02_files/app.js.descarga"></script>
+
+  
+
+</body></html>

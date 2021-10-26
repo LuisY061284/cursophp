@@ -1,0 +1,56 @@
+$(document).ready(function(){
+
+    //Mini menú y subir
+    function minimenu(){
+
+        $(window).scroll(function () {
+            var ancho = window.innerWidth;
+            if (ancho > 767) {
+                if ($(window).scrollTop() > 180) {
+                    $('.minimenu').fadeIn(100);
+                } else {
+                    $('.minimenu').fadeOut(100);
+                }
+            }
+            else{
+                $('.minimenu').fadeIn(100);
+            }
+        });
+
+    }
+
+    //Iniciar minimenú y subir
+    minimenu();
+
+    //Prevent resize
+    $(window).resize(function() {
+        minimenu();
+    });
+
+    //Subir
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 180) {
+            $('.subir').fadeIn(100);
+        } else {
+            $('.subir').fadeOut(100);
+        }
+    });
+
+    $('.subir').click(function(event) {
+        event.preventDefault();
+        $('html, body').animate({scrollTop: 0}, 300);
+        setTimeout(function(){ scrollAllow = true; }, 1000);
+        return false;
+    });
+
+    //Oculta los mensajes con un click
+    $(".mensajes .alert").click(function(){
+        $(this).hide();
+    });
+
+    //Mensajes
+    $(".mensajes .alert-success").delay(5000).fadeOut();
+    $(".mensajes .alert-warning").delay(10000).fadeOut();
+    $(".mensajes .alert-danger").delay(30000).fadeOut();
+
+});
